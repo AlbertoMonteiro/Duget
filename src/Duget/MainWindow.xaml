@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Duget"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="Duget" Height="768" Width="1024">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="78*"/>
+            <ColumnDefinition Width="49*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="244*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding ProjectName, StringFormat=Duget Package Manager: \{0\}}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5"/>
+        <StackPanel HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,4.4,0,4.8">
+            <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF">
+                <TextBlock Margin="5,0" Foreground="#FF3399FF">Browse</TextBlock>
+            </Border>
+            <TextBlock Margin="5,0">Installed</TextBlock>
+            <TextBlock Margin="5,0">Updates</TextBlock>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,5.2,0,5">
+            <TextBox Width="200" VerticalAlignment="Center" Margin="0,0,5,0"></TextBox>
+            <CheckBox Content="Include prerelease" VerticalAlignment="Center"></CheckBox>
+        </StackPanel>
+        <Grid Grid.Row="3" Grid.Column="0">
+            <ListBox x:Name="listBox" />
+            <StackPanel Margin="10,5" Visibility="{Binding ShowLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar Height="15" IsIndeterminate="True"></ProgressBar>
+                <TextBlock HorizontalAlignment="Center">Loading...</TextBlock>
+            </StackPanel>
+            <TextBlock Text="No items found" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Visibility="{Binding ShowNoItemsFound, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
     </Grid>
 </Window>
