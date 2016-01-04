@@ -1,15 +1,12 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Converters="clr-namespace:Duget.Converters" x:Class="Duget.MainWindow"
-        Title="Duget" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </Window.Resources>
+        xmlns:attachedProperties="clr-namespace:Duget.AttachedProperties"
+        x:Class="Duget.MainWindow"
+        Title="Duget" MinHeight="768" MinWidth="1024" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
     </Window.DataContext>
-    <Grid>
+    <Grid MinWidth="1024" MinHeight="768">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="78*"/>
             <ColumnDefinition Width="49*"/>
@@ -21,26 +18,102 @@
             <RowDefinition Height="244*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding ProjectName, StringFormat=Duget Package Manager: \{0\}}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5" />
-        <StackPanel HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,4.4,0,4.8">
-            <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0" >
-                <TextBlock Foreground="#FF3399FF"><Run Text="Browse"/></TextBlock>
-            </Border>
-            <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0" >
-                <TextBlock Foreground="#FF3399FF"><Run Text="Installed"/></TextBlock>
-            </Border>
-            <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0" >
-                <TextBlock Foreground="#FF3399FF"><Run Text="Updates"/></TextBlock>
-            </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,5,0,5">
+            <StackPanel>
+                <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0">
+                    <TextBlock Foreground="#FF3399FF" Text="Browse"/>
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowOnlinePackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <TextBlock Margin="5,0" Text="Browse" Padding="0,0,0,2">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowOnlinePackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0">
+                    <TextBlock Foreground="#FF3399FF" Text="Installed"/>
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowInstalledPackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <TextBlock Margin="5,0" Text="Installed" Padding="0,0,0,2">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowInstalledPackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <Border BorderThickness="0,0,0,2" BorderBrush="#FF2878FF" Margin="5,0">
+                    <TextBlock Foreground="#FF3399FF" Text="Update"/>
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowUpdatablePackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <TextBlock Margin="5,0" Text="Update" Padding="0,0,0,2">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowUpdatablePackages}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,5.2,0,5">
-            <TextBox Width="200" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <CheckBox Content="Include prerelease" VerticalAlignment="Center"/>
+        <StackPanel HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,5,0,5">
+            <TextBox Width="300" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="Type here to search text and press enter">
+                <attachedProperties:WatermarkService.Watermark>
+                    <TextBlock>Type here to search text and press enter</TextBlock>
+                </attachedProperties:WatermarkService.Watermark>
+            </TextBox>
+            <CheckBox Content="Include prerelease" VerticalAlignment="Center" />
         </StackPanel>
         <Grid Grid.Row="3" Grid.Column="0">
             <ListBox ItemsSource="{Binding Packages}" ItemTemplate="{DynamicResource DugetPackageDataTemplate}" HorizontalContentAlignment="Stretch" />
             <StackPanel Margin="10,5" Visibility="{Binding ShowLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ProgressBar Height="15" IsIndeterminate="True"/>
-                <TextBlock HorizontalAlignment="Center"><Run Text="Loading..."/></TextBlock>
+                <TextBlock HorizontalAlignment="Center" Text="Loading..."/>
             </StackPanel>
             <TextBlock Text="No items found" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Visibility="{Binding ShowNoItemsFound, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>

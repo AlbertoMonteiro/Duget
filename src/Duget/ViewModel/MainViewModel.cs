@@ -7,6 +7,8 @@ namespace Duget.ViewModel
     [ImplementPropertyChanged]
     public class MainViewModel : ViewModelBase
     {
+        private ListType _listType;
+
         public MainViewModel()
         {
             if (IsInDesignMode || IsInDesignModeStatic)
@@ -14,6 +16,7 @@ namespace Duget.ViewModel
                 ProjectName = "Cargas";
                 ShowNoItemsFound = false;
                 ShowLoading = false;
+                ListType = ListType.Browse;
 
                 Packages = new ObservableCollection<DugetPackage>
                 {
@@ -37,7 +40,6 @@ namespace Duget.ViewModel
             {
                 ProjectName = "Cargas";
                 ShowLoading = true;
-                // Code runs "for real"
             }
         }
 
@@ -46,6 +48,14 @@ namespace Duget.ViewModel
         public bool ShowNoItemsFound { get; set; }
 
         public bool ShowLoading { get; set; }
+
+        public bool ShowOnlinePackages => ListType == ListType.Browse;
+
+        public bool ShowInstalledPackages => ListType == ListType.Installed;
+
+        public bool ShowUpdatablePackages => ListType == ListType.Update;
+
+        public ListType ListType { get; set; }
 
         public ObservableCollection<DugetPackage> Packages { get; set; }
     }
