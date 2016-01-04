@@ -21,7 +21,7 @@
                         <TextBlock Text="{Binding Author}" />
                     </StackPanel>
                     <TextBlock Text="{Binding Version}" Grid.Column="2" />
-                    <TextBlock Text="{Binding Description}" Grid.Row="1" Grid.Column="1" Margin="0,5" />
+                    <TextBlock Text="{Binding Description}" Grid.Row="1" Grid.Column="1" Margin="0,5" TextWrapping="WrapWithOverflow" TextTrimming="WordEllipsis" />
                 </Grid>
             </DataTemplate>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Duget.ViewModel" />

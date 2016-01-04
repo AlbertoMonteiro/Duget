@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:attachedProperties="clr-namespace:Duget.AttachedProperties"
         x:Class="Duget.MainWindow"
-        Title="Duget" MinHeight="768" MinWidth="1024" WindowStartupLocation="CenterScreen">
+        Title="Duget" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
     </Window.DataContext>
