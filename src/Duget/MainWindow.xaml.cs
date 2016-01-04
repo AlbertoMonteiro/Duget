@@ -9,7 +9,6 @@ namespace Duget
     {
         public MainWindow()
         {
-            System.Diagnostics.Debugger.Launch();
             InitializeComponent();
         }
     }
